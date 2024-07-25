@@ -5,7 +5,7 @@ public class EventsClientFactory {
         projectId: String,
         sdkVersion: String
     ) -> EventsClient {
-        create(projectId: projectId, sdkVersion: String)
+        create(projectId: projectId, sdkVersion: sdkVersion)
     }
 
     static func create(

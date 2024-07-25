@@ -1,6 +1,13 @@
 import Foundation
 
 public class EventsClientFactory {
+    public static func createWithDefaultStorage(
+        projectId: String,
+        sdkVersion: String
+    ) -> EventsClient {
+        create(projectId: projectId, sdkVersion: String)
+    }
+
     static func create(
         projectId: String,
         sdkVersion: String,

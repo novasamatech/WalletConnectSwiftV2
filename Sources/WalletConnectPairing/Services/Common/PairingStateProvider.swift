@@ -2,6 +2,8 @@ import Combine
 import Foundation
 
 class PairingStateProvider {
+    private let lock: NSLock = NSLock()
+
     private let pairingStorage: WCPairingStorage
     private var pairingStatePublisherSubject = PassthroughSubject<Bool, Never>()
     private var checkTimer: Timer?
@@ -16,9 +18,16 @@ class PairingStateProvider {
         setupPairingStateCheckTimer()
     }
 
+    deinit {
+        clearTimer()
+    }
+
     private func setupPairingStateCheckTimer() {
-        checkTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [unowned self] _ in
-            checkPairingState()
+        lock.lock()
+        defer { lock.unlock() }
+
+        checkTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.checkPairingState()
         }
     }
 
@@ -29,5 +38,13 @@ class PairingStateProvider {
             pairingStatePublisherSubject.send(pairingStateActive)
             lastPairingState = pairingStateActive
         }
+    }
+
+    private func clearTimer() {
+        lock.lock()
+        defer { lock.unlock() }
+
+        checkTimer?.invalidate()
+        checkTimer = nil
     }
 }

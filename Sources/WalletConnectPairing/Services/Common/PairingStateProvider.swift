@@ -16,9 +16,13 @@ class PairingStateProvider {
         setupPairingStateCheckTimer()
     }
 
+    deinit {
+        clearTimer()
+    }
+
     private func setupPairingStateCheckTimer() {
-        checkTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [unowned self] _ in
-            checkPairingState()
+        checkTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.checkPairingState()
         }
     }
 
@@ -29,5 +33,10 @@ class PairingStateProvider {
             pairingStatePublisherSubject.send(pairingStateActive)
             lastPairingState = pairingStateActive
         }
+    }
+
+    private func clearTimer() {
+        checkTimer?.invalidate()
+        checkTimer = nil
     }
 }

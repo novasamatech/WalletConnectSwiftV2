@@ -146,7 +146,7 @@ Pod::Spec.new do |spec|
   spec.subspec 'WalletConnectModal' do |ss|
     ss.source_files = 'Sources/WalletConnectModal/**/*.{h,m,swift}'
     ss.dependency 'WalletConnectSwiftV2/WalletConnectSign'
-    ss.dependency 'DSF_QRCode', '~> 16.1.1'
+    ss.dependency 'DSF_QRCode', '~> 18.0.0'
     ss.platform = :ios
   end
 end

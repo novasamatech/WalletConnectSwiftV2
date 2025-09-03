@@ -23,6 +23,9 @@ fastlane/README.md
 # Configuration
 Configuration.xcconfig
 
+# SPM
+.swiftpm/
+
 # Cache
 SourcePackagesCache
 DerivedDataCache
